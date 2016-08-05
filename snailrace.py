@@ -15,7 +15,7 @@ snailrect = [ snail[i].get_rect() for i in range(N) ]
 lettuce = [ pygame.image.load ("lettuce.gif") for i in range(N) ]
 lettuce_rect = [ lettuce[i].get_rect() for i in range(N) ]
 
-speed = [ [i+1, 0] for i in range(N) ]
+speed = [ [1, 0] for i in range(N) ]
 
 lettuce_keys = { pygame.K_1 : [ 0, [-5, 0] ],
                  pygame.K_2 : [ 0, [ 5, 0] ],
