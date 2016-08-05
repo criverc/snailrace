@@ -12,10 +12,14 @@ pygame.display.set_caption('Snail Race!!')
 
 snail = [ pygame.image.load("snail-normal.gif") for i in range(N) ]
 snailrect = [ snail[i].get_rect() for i in range(N) ]
+lettuce = [ pygame.image.load ("lettuce.gif") for i in range(N) ]
+lettuce_rect = [ lettuce[i].get_rect() for i in range(N) ]
+
 speed = [ [i+1, 0] for i in range(N) ]
 
 for i in xrange(N):
     snailrect[i] = snailrect[i].move([0, i*(height/N)])
+    lettuce_rect[i] = lettuce_rect[i].move([(width/2), i*(height/N)])
 
 while 1:
     screen.blit(background, background.get_rect())
@@ -42,6 +46,7 @@ while 1:
             speed[i][1] = -speed[i][1]
 
         screen.blit(snail[i], snailrect[i])
+        screen.blit(lettuce[i], lettuce_rect[i])
 
     pygame.display.flip()
 
