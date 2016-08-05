@@ -2,7 +2,7 @@ import sys, pygame
 import time
 pygame.init()
 
-N=10  # number of snails
+N=4  # number of snails
 
 size = width, height = 640, 480
 
