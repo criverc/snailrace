@@ -8,6 +8,7 @@ size = width, height = 640, 480
 
 background = pygame.image.load ("background.gif")
 screen = pygame.display.set_mode(size)
+pygame.display.set_caption('Snail Race!!')
 
 snail = [ pygame.image.load("snail-normal.gif") for i in range(N) ]
 snailrect = [ snail[i].get_rect() for i in range(N) ]
