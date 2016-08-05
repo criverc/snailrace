@@ -17,6 +17,15 @@ lettuce_rect = [ lettuce[i].get_rect() for i in range(N) ]
 
 speed = [ [i+1, 0] for i in range(N) ]
 
+lettuce_keys = { pygame.K_1 : [ 0, [-5, 0] ],
+                 pygame.K_2 : [ 0, [ 5, 0] ],
+                 pygame.K_9 : [ 1, [-5, 0] ],
+                 pygame.K_0 : [ 1, [ 5, 0] ],
+                 pygame.K_z : [ 2, [-5, 0] ],
+                 pygame.K_x : [ 2, [ 5, 0] ],
+                 pygame.K_n : [ 3, [-5, 0] ],
+                 pygame.K_m : [ 3, [ 5, 0] ] }
+
 for i in xrange(N):
     snailrect[i] = snailrect[i].move([0, i*(height/N)])
     lettuce_rect[i] = lettuce_rect[i].move([(width/2), i*(height/N)])
@@ -27,6 +36,11 @@ while 1:
     for i in xrange (N):
         for event in pygame.event.get():
             if event.type == pygame.QUIT: sys.exit()
+
+            if event.type == pygame.KEYDOWN:
+                if lettuce_keys.has_key (event.key):
+                    j, move = lettuce_keys[event.key]
+                    lettuce_rect[j] = lettuce_rect[j].move(move)
 
         snailrect[i] = snailrect[i].move(speed[i])
         if snailrect[i].right > width-50 and speed[i][0]>0:
