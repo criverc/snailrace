@@ -43,10 +43,10 @@ while 1:
                     lettuce_rect[j] = lettuce_rect[j].move(move)
 
         snailrect[i] = snailrect[i].move(speed[i])
-        if snailrect[i].right > width-50 and speed[i][0]>0:
+        if snailrect[i].right > lettuce_rect[i].left-50 and speed[i][0]>0:
             snail[i] = pygame.image.load("snail-surprised.gif")
 
-        if snailrect[i].left < 0 or snailrect[i].right > width:
+        if snailrect[i].left < 0 or snailrect[i].right > lettuce_rect[i].left:
             snail[i] = pygame.image.load("snail-normal.gif")
             speed[i][0] = -speed[i][0]
             if speed[i][0] < 0:
