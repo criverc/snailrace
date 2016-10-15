@@ -140,8 +140,8 @@ lettuce_keys = { pygame.K_1 : [ 0, [-5, 0] ],
                  pygame.K_m : [ 3, [ 5, 0] ] }
 
 for i in range(N):
-    snails[i].move([0, i*(height/N)])
-    lettuces[i].move([(width/2), i*(height/N)])
+    snails[i].move([0, (height/N)*0.20+i*(height/N)])
+    lettuces[i].move([(width/2), (height/N)*0.20+i*(height/N)])
 
 while True:
     screen.blit(background, background.get_rect())
