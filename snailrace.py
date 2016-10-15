@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import sys, pygame
 import time
 pygame.init()
@@ -126,19 +128,19 @@ lettuce_keys = { pygame.K_1 : [ 0, [-5, 0] ],
                  pygame.K_n : [ 3, [-5, 0] ],
                  pygame.K_m : [ 3, [ 5, 0] ] }
 
-for i in xrange(N):
+for i in range(N):
     snails[i].move([0, i*(height/N)])
     lettuces[i].move([(width/2), i*(height/N)])
 
 while True:
     screen.blit(background, background.get_rect())
 
-    for i in xrange (N):
+    for i in range (N):
         for event in pygame.event.get():
             if event.type == pygame.QUIT: sys.exit()
 
             if event.type == pygame.KEYDOWN:
-                if lettuce_keys.has_key (event.key):
+                if event.key in lettuce_keys:
                     j, move = lettuce_keys[event.key]
                     lettuces[j].move(move)
 
