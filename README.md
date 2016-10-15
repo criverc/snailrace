@@ -1,12 +1,7 @@
 # snailrace
 A game of racing snails!!
 
-Not much of a game yet!!!
-
-Things to do:
-
-    1. Snails should follow lettuces. The closer it is the faster it goes.
-
-    2. If the whole lettuce is eaten the snail stops :-(
-
-    3. The game should end when one snail reaches the end.
+Whoever gets to the end wins!
+The bigger the lettuce the stronger the attraction force.
+The closer to the lettuce the stronger the attraction force.
+If a snails reaches a lettuce it takes a bite and goes around!
