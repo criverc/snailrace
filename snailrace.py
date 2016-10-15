@@ -117,6 +117,11 @@ class snail (object):
         screen.blit (self.surface, self.rect)
 
 
+    def update_speed (self, lettuce):
+        sign = self.speed[0]/abs (self.speed[0])
+        s = sign + (sign * 6 * abs (lettuce.current_size / (lettuce.right - self.left)))
+        self.speed[0] = s
+
 
 background = pygame.image.load ("background.gif")
 screen = pygame.display.set_mode(size)
@@ -150,6 +155,7 @@ while True:
                     j, move = lettuce_keys[event.key]
                     lettuces[j].move(move)
 
+        snails[i].update_speed (lettuces[i])
         snails[i].move()
 
         if snails[i].right > lettuces[i].left-50 and snails[i].speed[0] > 0:
