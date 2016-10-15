@@ -150,7 +150,7 @@ winner = None
 while winner is None:
     screen.blit(background, background.get_rect())
 
-    for snail, lettuce in zip (snails, lettuces):
+    for i, (snail, lettuce) in enumerate (zip (snails, lettuces)):
         for event in pygame.event.get():
             if event.type == pygame.QUIT: sys.exit()
 
