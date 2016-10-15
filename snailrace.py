@@ -61,7 +61,7 @@ class snail (object):
     def __init__ (self):
         self.rect = None
         self.state = snail.NORMAL
-        self.orientation = 1
+        self.speed = [1, 0]
 
         self.__load_image ()
 
@@ -75,23 +75,32 @@ class snail (object):
         if self.rect is None:
             self.rect = self.surface.get_rect ()
 
+        if self.speed[0] < 0:
+            self.surface = pygame.transform.flip (self.surface, True, False)
 
-    def move (self, speed):
+
+    def move (self, speed=None):
+        if speed is None:
+            speed = self.speed
+
         self.rect = self.rect.move (speed)
 
 
     def set_surprised (self):
-        self.state = snail.SURPRISED
-        self.__load_image ()
+        if self.state is not snail.SURPRISED:
+            self.state = snail.SURPRISED
+            self.__load_image ()
 
 
     def set_normal (self):
-        self.state = snail.NORMAL
-        self.__load_image ()
+        if self.state is not snail.NORMAL:
+            self.state = snail.NORMAL
+            self.__load_image ()
 
 
     def flip (self):
-        self.surface = pygame.transform.flip (self.surface, True, False)
+        self.speed = [-self.speed[0], self.speed[1]]
+        self.__load_image ()
 
 
     @property
@@ -115,9 +124,6 @@ pygame.display.set_caption('Snail Race!!')
 
 snails = [ snail () for i in range(N) ]
 lettuces = [ lettuce () for i in range(N) ]
-
-
-speed = [ [1, 0] for i in range(N) ]
 
 lettuce_keys = { pygame.K_1 : [ 0, [-5, 0] ],
                  pygame.K_2 : [ 0, [ 5, 0] ],
@@ -144,18 +150,20 @@ while True:
                     j, move = lettuce_keys[event.key]
                     lettuces[j].move(move)
 
-        snails[i].move(speed[i])
-        if snails[i].right > lettuces[i].left-50 and speed[i][0]>0:
+        snails[i].move()
+
+        if snails[i].right > lettuces[i].left-50 and snails[i].speed[0] > 0:
             snails[i].set_surprised ()
 
-        if snails[i].left < 0 or snails[i].right > lettuces[i].left:
+        if snails[i].right > lettuces[i].left and snails[i].speed[0] > 0:
             snails[i].set_normal ()
-            speed[i][0] = -speed[i][0]
-            if speed[i][0] < 0:
-                snails[i].flip ()
+            snails[i].flip ()
 
-        if snails[i].left < 50 and speed[i][0]<0:
+        if snails[i].left < 50 and snails[i].speed[0] < 0:
             snails[i].set_surprised ()
+
+        if snails[i].left < 0 and snails[i].speed[0] < 0:
+            snails[i].set_normal ()
             snails[i].flip ()
 
         snails[i].blit (screen)
