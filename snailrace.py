@@ -4,6 +4,8 @@ import sys, pygame
 import time
 pygame.init()
 
+myfont = pygame.font.SysFont ("monospace", 40)
+
 N=4  # number of snails
 
 size = width, height = 640, 480
@@ -143,7 +145,9 @@ for i in range(N):
     snails[i].move([0, (height/N)*0.20+i*(height/N)])
     lettuces[i].move([(width/2), (height/N)*0.20+i*(height/N)])
 
-while True:
+winner = None
+
+while winner is None:
     screen.blit(background, background.get_rect())
 
     for i in range (N):
@@ -157,6 +161,10 @@ while True:
 
         snails[i].update_speed (lettuces[i])
         snails[i].move()
+
+        if snails[i].right > width * 0.94:
+            winner = i
+            break
 
         if snails[i].right > lettuces[i].left-50 and snails[i].speed[0] > 0:
             snails[i].set_surprised ()
@@ -176,6 +184,20 @@ while True:
         snails[i].blit (screen)
         lettuces[i].blit (screen)
 
+
     pygame.display.flip()
 
     time.sleep (0.05)
+
+
+while True:
+    label = myfont.render ("Snail %d wins!!!" % (i+1), 1, (255,255,0))
+    screen.blit (label, (width*0.2, height*0.5))
+    pygame.display.flip()
+    time.sleep (0.5)
+    screen.blit(background, background.get_rect())
+    pygame.display.flip()
+    time.sleep (0.5)
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT: sys.exit()
