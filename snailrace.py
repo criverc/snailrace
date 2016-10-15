@@ -156,6 +156,7 @@ while True:
             snails[i].set_surprised ()
 
         if snails[i].right > lettuces[i].left and snails[i].speed[0] > 0:
+            lettuces[i].take_a_bite ()
             snails[i].set_normal ()
             snails[i].flip ()
 
