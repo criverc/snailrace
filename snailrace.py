@@ -51,12 +51,67 @@ class lettuce (object):
         screen.blit (self.surface, self.rect)
 
 
+class snail (object):
+
+    NORMAL=0
+    SURPRISED=1
+
+    def __init__ (self):
+        self.rect = None
+        self.state = snail.NORMAL
+        self.orientation = 1
+
+        self.__load_image ()
+
+
+    def __load_image (self):
+        if self.state is snail.NORMAL:
+            self.surface = pygame.image.load ('snail-normal.gif')
+        else:
+            self.surface = pygame.image.load ('snail-surprised.gif')
+
+        if self.rect is None:
+            self.rect = self.surface.get_rect ()
+
+
+    def move (self, speed):
+        self.rect = self.rect.move (speed)
+
+
+    def set_surprised (self):
+        self.state = snail.SURPRISED
+        self.__load_image ()
+
+
+    def set_normal (self):
+        self.state = snail.NORMAL
+        self.__load_image ()
+
+
+    def flip (self):
+        self.surface = pygame.transform.flip (self.surface, True, False)
+
+
+    @property
+    def left (self):
+        return self.rect.left
+
+
+    @property
+    def right (self):
+        return self.rect.right
+
+
+    def blit (self, screen):
+        screen.blit (self.surface, self.rect)
+
+
+
 background = pygame.image.load ("background.gif")
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption('Snail Race!!')
 
-snail = [ pygame.image.load("snail-normal.gif") for i in range(N) ]
-snailrect = [ snail[i].get_rect() for i in range(N) ]
+snails = [ snail () for i in range(N) ]
 lettuces = [ lettuce () for i in range(N) ]
 
 
@@ -72,7 +127,7 @@ lettuce_keys = { pygame.K_1 : [ 0, [-5, 0] ],
                  pygame.K_m : [ 3, [ 5, 0] ] }
 
 for i in xrange(N):
-    snailrect[i] = snailrect[i].move([0, i*(height/N)])
+    snails[i].move([0, i*(height/N)])
     lettuces[i].move([(width/2), i*(height/N)])
 
 while 1:
@@ -87,24 +142,21 @@ while 1:
                     j, move = lettuce_keys[event.key]
                     lettuces[j].move(move)
 
-        snailrect[i] = snailrect[i].move(speed[i])
-        if snailrect[i].right > lettuces[i].left-50 and speed[i][0]>0:
-            snail[i] = pygame.image.load("snail-surprised.gif")
+        snails[i].move(speed[i])
+        if snails[i].right > lettuces[i].left-50 and speed[i][0]>0:
+            snails[i].set_surprised ()
 
-        if snailrect[i].left < 0 or snailrect[i].right > lettuces[i].left:
-            snail[i] = pygame.image.load("snail-normal.gif")
+        if snails[i].left < 0 or snails[i].right > lettuces[i].left:
+            snails[i].set_normal ()
             speed[i][0] = -speed[i][0]
             if speed[i][0] < 0:
-                snail[i] = pygame.transform.flip (snail[i], True, False)
+                snails[i].flip ()
 
-        if snailrect[i].left < 50 and speed[i][0]<0:
-            snail[i] = pygame.image.load("snail-surprised.gif")
-            snail[i] = pygame.transform.flip (snail[i], True, False)
+        if snails[i].left < 50 and speed[i][0]<0:
+            snails[i].set_surprised ()
+            snails[i].flip ()
 
-        if snailrect[i].top < 0 or snailrect[i].bottom > height:
-            speed[i][1] = -speed[i][1]
-
-        screen.blit(snail[i], snailrect[i])
+        snails[i].blit (screen)
         lettuces[i].blit (screen)
 
     pygame.display.flip()
