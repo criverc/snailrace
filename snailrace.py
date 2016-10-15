@@ -150,7 +150,7 @@ winner = None
 while winner is None:
     screen.blit(background, background.get_rect())
 
-    for i in range (N):
+    for snail, lettuce in zip (snails, lettuces):
         for event in pygame.event.get():
             if event.type == pygame.QUIT: sys.exit()
 
@@ -159,34 +159,32 @@ while winner is None:
                     j, move = lettuce_keys[event.key]
                     lettuces[j].move(move)
 
-        snails[i].update_speed (lettuces[i])
-        snails[i].move()
+        snail.update_speed (lettuce)
+        snail.move()
 
-        if snails[i].right > width * 0.94:
+        if snail.right > width * 0.94:
             winner = i
             break
 
-        if snails[i].right > lettuces[i].left-50 and snails[i].speed[0] > 0:
-            snails[i].set_surprised ()
+        if snail.right > lettuce.left-50 and snail.speed[0] > 0:
+            snail.set_surprised ()
 
-        if snails[i].right > lettuces[i].left and snails[i].speed[0] > 0:
-            lettuces[i].take_a_bite ()
-            snails[i].set_normal ()
-            snails[i].flip ()
+        if snail.right > lettuce.left and snail.speed[0] > 0:
+            lettuce.take_a_bite ()
+            snail.set_normal ()
+            snail.flip ()
 
-        if snails[i].left < 50 and snails[i].speed[0] < 0:
-            snails[i].set_surprised ()
+        if snail.left < 50 and snail.speed[0] < 0:
+            snail.set_surprised ()
 
-        if snails[i].left < 0 and snails[i].speed[0] < 0:
-            snails[i].set_normal ()
-            snails[i].flip ()
+        if snail.left < 0 and snail.speed[0] < 0:
+            snail.set_normal ()
+            snail.flip ()
 
-        snails[i].blit (screen)
-        lettuces[i].blit (screen)
-
+        snail.blit (screen)
+        lettuce.blit (screen)
 
     pygame.display.flip()
-
     time.sleep (0.05)
 
 
