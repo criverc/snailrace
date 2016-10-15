@@ -130,7 +130,7 @@ for i in xrange(N):
     snails[i].move([0, i*(height/N)])
     lettuces[i].move([(width/2), i*(height/N)])
 
-while 1:
+while True:
     screen.blit(background, background.get_rect())
 
     for i in xrange (N):
