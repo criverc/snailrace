@@ -13,47 +13,37 @@ size = width, height = 640, 480
 
 class lettuce (object):
 
-
     def __init__ (self):
         self.sizes = [0, 10, 30, 50, 70, 90, 100]
         self.current_size = self.sizes.pop ()
         self.rect = None
         self.__load_image ()
 
-
     def __load_image (self):
         self.surface = pygame.image.load ('lettuce_%d%%.gif' % self.current_size)
         if self.rect is None:
             self.rect = self.surface.get_rect ()
 
-
     def take_a_bite (self):
         try:
             self.current_size = self.sizes.pop ()
-
         except IndexError:
             pass
-
         self.__load_image ()
-
 
     def move (self, speed):
         self.rect = self.rect.move (speed)
-
 
     @property
     def left (self):
         return self.rect.left
 
-
     @property
     def right (self):
         return self.rect.right
 
-
     def blit (self, screen):
         screen.blit (self.surface, self.rect)
-
 
 class snail (object):
 
@@ -126,7 +116,7 @@ class snail (object):
 
 
 background = pygame.image.load ("background.gif")
-screen = pygame.display.set_mode(size)
+screen = pygame.display.set_mode(size,pygame.FULLSCREEN)
 pygame.display.set_caption('Snail Race!!')
 
 snails = [ snail () for i in range(N) ]
@@ -158,6 +148,14 @@ while winner is None:
                 if event.key in lettuce_keys:
                     j, move = lettuce_keys[event.key]
                     lettuces[j].move(move)
+
+                if event.type == pygame.QUIT:
+                    sys.exit()
+
+                if event.type == KEYDOWN:
+                    if event.key == K_ESCAPE:
+                        pygame.quit()
+                        sys.exit()
 
         snail.update_speed (lettuce)
         snail.move()
@@ -198,4 +196,9 @@ while True:
     time.sleep (0.5)
 
     for event in pygame.event.get():
-        if event.type == pygame.QUIT: sys.exit()
+        if event.type == pygame.QUIT:
+            sys.exit()
+        if event.type == KEYDOWN:
+            if event.key == K_ESCAPE:
+                pygame.quit()
+                sys.exit()
