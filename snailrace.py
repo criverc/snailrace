@@ -24,7 +24,7 @@ class lettuce (object):
         self.__load_image ()
 
     def __load_image (self):
-        self.surface = pygame.image.load ('lettuce_%d%%.gif' % self.current_size)
+        self.surface = pygame.image.load (os.path.join("images",'lettuce_%d%%.gif') % self.current_size)
         if self.rect is None:
             self.rect = self.surface.get_rect ()
 
@@ -64,9 +64,9 @@ class snail (object):
 
     def __load_image (self):
         if self.state is snail.NORMAL:
-            self.surface = pygame.image.load ('snail-normal.gif')
+            self.surface = pygame.image.load (os.path.join("images", 'snail-normal.gif'))
         else:
-            self.surface = pygame.image.load ('snail-surprised.gif')
+            self.surface = pygame.image.load (os.path.join("images", 'snail-surprised.gif'))
 
         if self.rect is None:
             self.rect = self.surface.get_rect ()
@@ -119,7 +119,7 @@ class snail (object):
         self.speed[0] = s
 
 
-background = pygame.image.load ("background.gif")
+background = pygame.image.load (os.path.join("images", "background.gif"))
 screen = pygame.display.set_mode(size,pygame.FULLSCREEN)
 pygame.display.set_caption('Snail Race!!')
 
@@ -205,7 +205,7 @@ while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
-        if event.type == KEYDOWN:
-            if event.key == K_ESCAPE:
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
                 pygame.quit()
                 sys.exit()
