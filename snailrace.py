@@ -2,6 +2,10 @@
 
 import sys, pygame
 import time
+
+#Added os for joining paths when loading music
+import os
+
 pygame.init()
 
 myfont = pygame.font.SysFont ("monospace", 40)
@@ -136,6 +140,9 @@ for i in range(N):
     lettuces[i].move([(width/2), (height/N)*0.20+i*(height/N)])
 
 winner = None
+# Load music to game
+pygame.mixer.music.load(os.path.join("music", "intro.ogg"))
+pygame.mixer.music.play(-1)
 
 while winner is None:
     screen.blit(background, background.get_rect())
@@ -152,8 +159,8 @@ while winner is None:
                 if event.type == pygame.QUIT:
                     sys.exit()
 
-                if event.type == KEYDOWN:
-                    if event.key == K_ESCAPE:
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
                         pygame.quit()
                         sys.exit()
 
