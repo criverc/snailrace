@@ -5,6 +5,7 @@ import time
 
 #Added os for joining paths when loading music
 import os
+import snailracerc
 
 pygame.init()
 
@@ -24,7 +25,7 @@ class lettuce (object):
         self.__load_image ()
 
     def __load_image (self):
-        self.surface = pygame.image.load (os.path.join("images",'lettuce_%d%%.gif') % self.current_size)
+        self.surface = pygame.image.load (os.path.join (snailracerc.path, 'lettuce_%d%%.gif' % self.current_size))
         if self.rect is None:
             self.rect = self.surface.get_rect ()
 
@@ -64,9 +65,9 @@ class snail (object):
 
     def __load_image (self):
         if self.state is snail.NORMAL:
-            self.surface = pygame.image.load (os.path.join("images", 'snail-normal.gif'))
+            self.surface = pygame.image.load (os.path.join(snailracerc.path, 'snail-normal.gif'))
         else:
-            self.surface = pygame.image.load (os.path.join("images", 'snail-surprised.gif'))
+            self.surface = pygame.image.load (os.path.join(snailracerc.path, 'snail-surprised.gif'))
 
         if self.rect is None:
             self.rect = self.surface.get_rect ()
@@ -119,7 +120,7 @@ class snail (object):
         self.speed[0] = s
 
 
-background = pygame.image.load (os.path.join("images", "background.gif"))
+background = pygame.image.load (os.path.join(snailracerc.path, "background.gif"))
 screen = pygame.display.set_mode(size,pygame.FULLSCREEN)
 pygame.display.set_caption('Snail Race!!')
 
@@ -141,7 +142,7 @@ for i in range(N):
 
 winner = None
 # Load music to game
-pygame.mixer.music.load(os.path.join("music", "intro.ogg"))
+pygame.mixer.music.load(os.path.join(snailracerc.path, "intro.ogg"))
 pygame.mixer.music.play(-1)
 
 while winner is None:
